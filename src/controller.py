@@ -6,6 +6,7 @@ from audio_engine import AudioEngine
 class Controller:
     def __init__(self, ui=None):
         self.engine = AudioEngine()
+        self.engine.start_recording_stream()
         self.ui = ui
         self.running = True
 
@@ -23,8 +24,7 @@ class Controller:
                 print("audio_loop state:", state)
 
                 if state in ("recording", "overdub"):
-                    print("calling record_chunk")
-                    self.engine.record_chunk()
+                    pass #recording happens in callback
 
                 elif state == "playing":
                     try:

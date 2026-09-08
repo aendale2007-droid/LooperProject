@@ -23,15 +23,14 @@ class AudioEngine:
         self.state = "playing"
 
 
+    def start_recording_stream(self): #starts continuous recording stream (no breaks)
+        self.stream = sd.InputStream(samplerate=RATE, channels=1, dtype='float32', blocksize=CHUNK, callback=self.record_callback)
+        self.stream.start()
 
-    def record_chunk(self): #records one chunk of audio and appends it to current_layer
-        print("Recording chunk")
-        print("recording samplerate: ", RATE)
+    def record_callback(self, indata,frames,time,status):
         if self.state in ("recording","overdub"):
-            print("recording chunk")
-            chunk = sd.rec(CHUNK, samplerate=RATE, channels=1, dtype='float32')
-            sd.wait()
-            self.current_layer.append(chunk)
+            self.current_layer.append(indata.copy())
+
 
     def mix_layers(self): #combines each layer into one audio array
         if not self.layers:
