@@ -16,12 +16,12 @@ class Controller:
 
     def audio_loop(self):
 
-        print("audio loop started")
+        #print("audio loop started")
         #runs constantly in the background
         while self.running:
             try:
                 state = self.engine.state
-                print("audio_loop state:", state)
+                #print("audio_loop state:", state)
 
                 if state in ("recording", "overdub"):
                     pass #recording happens in callback
@@ -30,12 +30,12 @@ class Controller:
                     try:
                         stream = sd.get_stream()
                         if stream is None or not stream.active:
-                            print("starting playback...")
+                            #print("starting playback...")
                             self.engine.play_loop()
                         else:
                             time.sleep(0.1) #breaks while playing back
                     except Exception:
-                        print("starting playback failed")
+                        #print("starting playback failed")
                         self.engine.play_loop()
 
                 else: #take breaks while idle
