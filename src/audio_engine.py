@@ -1,3 +1,5 @@
+import os
+from datetime import datetime
 import sounddevice as sd
 import numpy as np
 from scipy.io.wavfile import write
@@ -75,7 +77,19 @@ class AudioEngine:
             self.layers.pop()
 
     def save_layers(self, folder_path ="loops/saved"):
+
+        base = os.path.dirname(os.path.dirname(__file__))
+        save_dir = os.path.join(base, "loops", "saved")
+        os.makedirs(save_dir, exist_ok=True)
+
+        timestamp = datetime.now().strftime("%Y%m%d-%H%M%S") #this gets time to add to filename
+                                                            #helps pervent duplicate filenames
+
         for idx, layer in enumerate(self.layers):
             audio = np.concatenate(layer, axis=0)
-            filename = f"{folder_path}/layer_{idx+1}.wav"
+
+
+            filename = os.path.join(save_dir, f"layer_{idx+1}_{timestamp}.wav")
+            print(f"SAVING LAYER {idx+1}: {filename}")
+
             write(filename, RATE, audio)
