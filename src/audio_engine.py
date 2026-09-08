@@ -19,7 +19,7 @@ class AudioEngine:
         self.state = mode #sets state to either recording or overdub
 
     def finish_layer(self): #recording stops, audio starts playing
-        print("Finished layer with", len(self.current_layer), "chunks")
+        #print("Finished layer with", len(self.current_layer), "chunks")
         if self.current_layer:
             self.layers.append(self.current_layer.copy()) #adds finished layer to the list
         self.state = "playing"
@@ -64,10 +64,12 @@ class AudioEngine:
 
     def play_loop(self): #plays mixed audio
         mixed = self.mix_layers()
-        print("MIXED TYPE:", type(mixed))
-        print("MIXED DTYPE:", mixed.dtype if hasattr(mixed, "dtype") else "NO DTYPE")
-        print("MIXED SHAPE:", mixed.shape if hasattr(mixed, "shape") else "NO SHAPE")
-        print("Playback samplerate: ", RATE)
+
+        #used in debug
+        #print("MIXED TYPE:", type(mixed))
+        #print("MIXED DTYPE:", mixed.dtype if hasattr(mixed, "dtype") else "NO DTYPE")
+        #print("MIXED SHAPE:", mixed.shape if hasattr(mixed, "shape") else "NO SHAPE")
+        #print("Playback samplerate: ", RATE)
 
         if mixed is not None:
             sd.play(mixed, RATE, blocking=False)
