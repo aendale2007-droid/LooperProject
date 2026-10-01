@@ -65,11 +65,6 @@ class AudioEngine:
     def play_loop(self): #plays mixed audio
         mixed = self.mix_layers()
 
-        #used in debug
-        #print("MIXED TYPE:", type(mixed))
-        #print("MIXED DTYPE:", mixed.dtype if hasattr(mixed, "dtype") else "NO DTYPE")
-        #print("MIXED SHAPE:", mixed.shape if hasattr(mixed, "shape") else "NO SHAPE")
-        #print("Playback samplerate: ", RATE)
 
         if mixed is not None:
             sd.play(mixed, RATE, blocking=False)
